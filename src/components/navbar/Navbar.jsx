@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import navImg from "../../assets/logo.svg";
 
-export default function Navbar() {
+export default function Navbar({ search, setSearch }) {
   return (
     <nav className="py-4 2xl:px-6">
       <div className="container flex items-center justify-between">
@@ -35,6 +37,8 @@ export default function Navbar() {
               />
             </svg>
             <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="Filter books..."
               className="search"

@@ -1,9 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { useDeleteBookMutation } from "../../features/api/apiSlice";
 
 export default function BookslistItem({ book }) {
   const { name, author, thumbnail, price, rating, featured, id } = book;
+
+  const [deleteBook, { isLoading }] = useDeleteBookMutation();
+
+  const handleDelete = () => {
+    deleteBook(id);
+  };
+
   return (
     <div className="book-card">
       <img
@@ -32,7 +40,11 @@ export default function BookslistItem({ book }) {
                 </svg>
               </Link>
             </button>
-            <button className="lws-deleteBook">
+            <button
+              disabled={isLoading}
+              onClick={handleDelete}
+              className="lws-deleteBook"
+            >
               <svg
                 fill="none"
                 viewBox="0 0 24 24"
@@ -53,7 +65,7 @@ export default function BookslistItem({ book }) {
           <h4 className="lws-book-name">{name}</h4>
           <p className="lws-author">{author}</p>
           <div className="lws-stars">
-            {[...Array(rating)]?.map((r) => (
+            {[...Array(rating)]?.map(() => (
               <>
                 <svg viewBox="0 0 20 20" fill="currentColor" className="star">
                   <path

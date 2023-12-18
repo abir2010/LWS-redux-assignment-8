@@ -1,10 +1,24 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useGetBooksQuery } from "../../features/api/apiSlice";
 import BookslistItem from "./BookslistItem";
 import Error from "./../ui/Error";
 import NewBookLoader from "./../ui/loaders/NewBookLoader";
 
-export default function Bookslist() {
+export default function Bookslist({ search = "", tag = "All" }) {
   const { data: books, isLoading, isError, error } = useGetBooksQuery();
+
+  const filterBySearch = (book) => {
+    if (book.name.toLowerCase().includes(search.toLowerCase())) return true;
+  };
+
+  const filterByTag = (book) => {
+    if (tag === "Featured" && book.featured === true) {
+      return true;
+    } else if (tag === "All") {
+      return true;
+    }
+  };
 
   let content = null;
   if (isLoading)
@@ -19,7 +33,10 @@ export default function Bookslist() {
   if (!isLoading && !isError && books?.length === 0)
     content = <Error message="No Books list found" />;
   if (!isLoading && !isError && books?.length > 0) {
-    content = books.map((book) => <BookslistItem key={book.id} book={book} />);
+    content = books
+      .filter((book) => filterBySearch(book))
+      .filter((book) => filterByTag(book))
+      .map((book) => <BookslistItem key={book.id} book={book} />);
   }
 
   return (
@@ -28,4 +45,3 @@ export default function Bookslist() {
     </div>
   );
 }
- 
