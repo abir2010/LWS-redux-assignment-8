@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add-book" element={<AddBook />} />
-        <Route path="/edit-book" element={<EditBook />} />
+        <Route path="/edit-book/:bookId" element={<EditBook />} />
       </Routes>
     </Router>
   );
