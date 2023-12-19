@@ -11,7 +11,7 @@ export default function Home() {
       <Navbar search={search} setSearch={setSearch} />
       <main className="py-12 px-6 2xl:px-6 container">
         <div className="order-2 xl:-order-1">
-          <Topbar setTag={setTag} />
+          <Topbar tag={tag} setTag={setTag} />
           <Bookslist search={search} tag={tag} />
         </div>
       </main>
